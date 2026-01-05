@@ -1,0 +1,23 @@
+LeetCode 1480 – Running Sum of 1D Array
+
+📌 ALGORITHM (BULLET STEPS FOR RECALL)
+Prefix Sum In-Place Algorithm:
+• Take first element as initial prefix sum.
+• Traverse the array from index 1 to n-1.
+• Add current element to prefixSum.
+• Store updated prefixSum back into the same index.
+• Continue till end of array.
+• Return the modified array.
+
+FIRST SOLUTION: TIME COMPLEXITY: O(N) || SPACE COMPLEXITY: O(1)
+class Solution {
+    public int[] runningSum(int[] nums) {
+        int prefixSum=nums[0];
+        for(int i=1;i<nums.length;i++)
+        {
+            prefixSum = prefixSum + nums[i];
+            nums[i]=prefixSum;
+        }
+        return nums;
+    }
+}
