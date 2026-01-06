@@ -78,3 +78,36 @@ class Solution {
         return result;
     }
 }
+-------------------------------------------------------------------------------------------------------------
+SOLUTION: 2 (OPTIMAL VERSION) ---- 📌 ALGORITHM (Bullet Documentation)
+• Initialize totalSum to store sum of all elements.
+• Traverse the array once and calculate totalSum.
+• Initialize leftSum = 0.
+• Traverse the array from index 0 to n-1:
+ • totalSum= leftSum + Pivot + rightSum. here the pivot is what we need to find so we doing like this.
+ • Compute rightSum = totalSum - leftSum - nums[i].
+ • If leftSum == rightSum, return i as pivot index.
+ • Otherwise, add nums[i] to leftSum.
+• If no pivot is found, return -1.
+--------------------------------------------------------------------------------------------------------------
+OPTIMAL SOLUTION : TIME COMPLEXITY:O(N) || SPACE COMPLEXITY:O(1)
+class Solution {
+    public int pivotIndex(int[] nums) {
+        int leftSum=0,rightSum=0,totalSum=0,result=-1;
+        for(int i=0;i<nums.length;i++)
+        {
+            totalSum=totalSum+nums[i];
+        }
+        for(int i=0;i<nums.length;i++)
+        {
+            rightSum=totalSum-leftSum-nums[i];
+            if(rightSum==leftSum) 
+            {
+                result = i;
+                break;
+            }
+            leftSum=leftSum+nums[i];
+        }
+        return result;
+    }
+}
