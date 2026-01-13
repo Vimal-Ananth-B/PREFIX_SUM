@@ -1,0 +1,59 @@
+LEETCODE--525. Contiguous Array
+Given a binary array nums, return the maximum length of a contiguous subarray with an equal number of 0 and 1.
+
+Example 1:
+Input: nums = [0,1]
+Output: 2
+Explanation: [0, 1] is the longest contiguous subarray with an equal number of 0 and 1.
+Example 2:
+Input: nums = [0,1,0]
+Output: 2
+Explanation: [0, 1] (or [1, 0]) is a longest contiguous subarray with equal number of 0 and 1.
+Example 3:
+Input: nums = [0,1,1,1,1,1,0,0,0]
+Output: 6
+Explanation: [1,1,1,0,0,0] is the longest contiguous subarray with equal number of 0 and 1.
+
+Constraints:
+1 <= nums.length <= 105
+nums[i] is either 0 or 1.
+--------------------------------------------------------------------------------------------------------------------------------
+🧠 Interview Recall Bullets
+• Convert 0 to -1
+• Find longest zero-sum subarray
+• Use prefix equality form
+• Map stores first prefix position
+• When prefix repeats → update max length
+• O(N) optimal solution
+--------------------------------------------------------------------------------------------------------------------------------
+OPTIMAL SOLUTION: TIME COMPLEXITY : O(N) || SPACE COMPLEXITY : O(N)
+
+class Solution {
+    public int findMaxLength(int[] nums) {
+        int prefixsum=0,result=0;
+        Map<Integer,Integer> mapp=new HashMap<>();
+        mapp.put(0,0);
+        for(int i=0;i<nums.length;i++)
+        {
+            if(nums[i]==0)
+            {
+                nums[i]=-1;
+            }
+        }
+        for(int i=0;i<nums.length;i++)
+        {
+            prefixsum=prefixsum+nums[i];
+            if(mapp.containsKey(prefixsum))
+            {
+                int temp=mapp.get(prefixsum);
+                result=Math.max(result,(i+1-temp));
+            }
+            else
+            {
+                mapp.put(prefixsum,i+1);
+            }
+        }
+        return result;
+    }
+}
+--------------------------------------------------------------------------------------------------------------------------------
