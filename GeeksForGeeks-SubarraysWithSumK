@@ -1,0 +1,56 @@
+GEEKS FOR GEEKS : Subarrays with sum K
+Given an unsorted array arr[] of integers, find the number of subarrays whose sum exactly equal to a given number k.
+Examples:
+Input: arr[] = [10, 2, -2, -20, 10], k = -10
+Output: 3
+Explaination: Subarrays: arr[0...3], arr[1...4], arr[3...4] have sum exactly equal to -10.
+
+Input: arr[] = [9, 4, 20, 3, 10, 5], k = 33
+Output: 2
+Explaination: Subarrays: arr[0...2], arr[2...4] have sum exactly equal to 33.
+
+Input: arr[] = [1, 3, 5], k = 0
+Output: 0
+Explaination: No subarray with 0 sum.
+Constraints:
+1 ≤ arr.size() ≤ 105
+-103 ≤ arr[i] ≤ 103
+-105 ≤ k ≤ 105
+--------------------------------------------------------------------------------------------------------------------------------
+ALGORITHM BULLET POINTS:
+*)Initialize prefixSum = 0 and count = 0
+*)Create a HashMap to store frequency of prefix sums
+*)Insert (0 → 1) into the map
+*)→ Handles subarrays starting from index 0
+*)Traverse the array:
+*)Add current element to prefixSum
+*)If (prefixSum - k) exists in map:
+*)Add its frequency to count
+*)Update frequency of prefixSum in map
+*)Return count
+--------------------------------------------------------------------------------------------------------------------------------
+OPTIMAL CODE: TIME COMPLEXITY:O(N) || SPACE COMPLEXITY:O(N)
+class Solution {
+    public int cntSubarrays(int[] arr, int k) {
+        int prefixsum=0,count=0;
+        Map<Integer,Integer> mapp=new HashMap<>();
+        mapp.put(0,1);
+        for(int i=0;i<arr.length;i++)
+        {
+            prefixsum=prefixsum+arr[i];
+            if(mapp.containsKey(prefixsum-k))
+            {
+                count=count+mapp.get(prefixsum-k);
+            }
+            if(mapp.containsKey(prefixsum))
+            {
+                mapp.put(prefixsum,(mapp.get(prefixsum))+1);
+            }
+            else
+            {
+                mapp.put(prefixsum,1);
+            }
+        }
+        return count;
+    }
+}
