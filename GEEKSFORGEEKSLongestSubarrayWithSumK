@@ -1,0 +1,59 @@
+GEEKS FOR GEEKS : Longest Subarray with Sum K
+Given an array arr[] containing integers and an integer k, your task is to find the length of the longest subarray 
+where the sum of its elements is equal to the given value k. If there is no subarray with sum equal to k, return 0.
+
+Examples:
+Input: arr[] = [10, 5, 2, 7, 1, -10], k = 15
+Output: 6
+Explanation: Subarrays with sum = 15 are [5, 2, 7, 1], [10, 5] and [10, 5, 2, 7, 1, -10]. 
+The length of the longest subarray with a sum of 15 is 6.
+Input: arr[] = [-5, 8, -14, 2, 4, 12], k = -5
+Output: 5
+Explanation: Subarrays with sum = -5 are [-5] and [-5, 8, -14, 2, 4]. 
+The length of the longest subarray with a sum of -5 is 5.
+Input: arr[] = [10, -10, 20, 30], k = 5
+Output: 0
+Explanation: No subarray with sum = 5 is present in arr[].
+Constraints:
+1 ≤ arr.size() ≤ 105
+-104 ≤ arr[i] ≤ 104
+-109 ≤ k ≤ 109
+---------------------------------------------------------------------------------------------------------------------
+ALGORITHM:
+*)Initialize a variable prefixSum to keep track of cumulative sum.
+*)Use a HashMap to store the first occurrence index of each prefix sum.
+*)Insert (0 → 0) into the map to handle subarrays starting from index 0.
+*)Traverse the array:
+*)Add current element to prefixSum.
+*)If (prefixSum - k) exists in the map:
+*)A subarray with sum k ends at current index.
+*)Calculate its length using
+*)currentLength = (i + 1) - map.get(prefixSum - k)
+*)Update the maximum length.
+*)If prefixSum is not already present in the map:
+*)Store its first occurrence index (i + 1).
+*)Return the maximum length found.
+*)If no valid subarray exists, return 0.
+---------------------------------------------------------------------------------------------------------------------
+OPTIMAL CODE: TIME COMPLEXITY: O(N) || SPACE COMPLEXITY: O(N)
+class Solution {
+    public int longestSubarray(int[] arr, int k) {
+       int prefixsum=0,count=0,fincount=0;
+        Map<Integer,Integer> mapp=new HashMap<>();
+        mapp.put(0,0);
+        for(int i=0;i<arr.length;i++)
+        {
+            prefixsum=prefixsum+arr[i];
+            if(mapp.containsKey(prefixsum-k))
+            {
+                count=i+1-mapp.get(prefixsum-k);
+                fincount=Math.max(fincount,count);
+            }
+            if(!mapp.containsKey(prefixsum))
+            {
+                mapp.put(prefixsum,i+1);
+            }
+        }
+        return fincount;
+    }
+}
